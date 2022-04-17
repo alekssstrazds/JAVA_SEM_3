@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import lv.venta.demo.model.Product;
+
 @Controller
 public class SimpleController {
     /**
@@ -21,5 +23,12 @@ public class SimpleController {
         model.addAttribute("package", "Zina no JAVA Backend puses");
         System.out.println("msg kontrolieris ir izsaukts");
         return "msg-page";// ieladejam msg-page.html lapu
+    }
+    @GetMapping("/product")
+    public String productFunc(Model model) {
+        Product product = new Product("Abols", 0.99f, 10);
+        model.addAttribute("package", product);
+        System.out.println("product kontrolieris ir izsaukts");
+        return "product-page";// ieladejam product-page.html lapu ar package sutijumu
     }
 }

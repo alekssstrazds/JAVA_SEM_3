@@ -9,5 +9,4 @@ public class JavaSem3Application {
 	public static void main(String[] args) {
 		SpringApplication.run(JavaSem3Application.class, args);
 	}
-
 }

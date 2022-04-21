@@ -1,7 +1,5 @@
 package lv.venta.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
-
 public class Product {
     private String title;
     private float price;

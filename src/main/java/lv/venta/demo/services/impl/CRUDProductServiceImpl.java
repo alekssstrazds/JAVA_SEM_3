@@ -39,14 +39,22 @@ public class CRUDProductServiceImpl implements ICRUDProductService {
 
     @Override
     public Product readById(int id) throws Exception {
-        // TODO Auto-generated method stub
-        return null;
+        for(Product prod: allProducts) {
+            if(prod.getId() == id) {
+                return prod;
+            }
+        }
+        throw new Exception("Id nav atrasts!!!");
     }
 
     @Override
     public void updateById(int id, Product temp) throws Exception {
-        // TODO Auto-generated method stub
-        
+        for(Product prod: allProducts) {
+            if(prod.getId() == id) {
+                prod.equals(temp);
+            }
+        }
+        throw new Exception("Id nav atrasts!!!");
     }
 
     @Override

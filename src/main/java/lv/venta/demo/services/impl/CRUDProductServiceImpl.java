@@ -51,7 +51,15 @@ public class CRUDProductServiceImpl implements ICRUDProductService {
     public void updateById(int id, Product temp) throws Exception {
         for(Product prod: allProducts) {
             if(prod.getId() == id) {
-                prod.equals(temp);
+                if(!prod.getTitle().equals(temp.getTitle())) {
+                    prod.setTitle(temp.getTitle()); 
+                }
+                if(prod.getQuantity() != temp.getQuantity()) {
+                    prod.setQuantity(temp.getQuantity());
+                }
+                if(prod.getPrice() != temp.getPrice()) {
+                    prod.setPrice(temp.getPrice());
+                } 
             }
         }
         throw new Exception("Id nav atrasts!!!");
@@ -59,8 +67,13 @@ public class CRUDProductServiceImpl implements ICRUDProductService {
 
     @Override
     public void deleteById(int id) throws Exception {
-        // TODO Auto-generated method stub
-        
+        for(Product prod: allProducts) {
+            if(prod.getId() == id) {
+                allProducts.remove(prod);
+                return;
+            }
+        }
+        throw new Exception("Id nav atrasts!!!");
     }
     
 }

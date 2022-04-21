@@ -1,9 +1,15 @@
 package lv.venta.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+
 public class Product {
     private String title;
     private float price;
     private int quantity;
+    private int id;
+
+    private static int counter = 0;
+
     public String getTitle() {
         return title;
     }
@@ -12,6 +18,9 @@ public class Product {
     }
     public int getQuantity() {
         return quantity;
+    }
+    public int getId() {
+        return id;
     }
 
     public void setTitle(String title) {
@@ -23,10 +32,15 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    public void setId() {
+        this.id = counter;
+        counter++;
+    }
 
     public Product() {  
     }
     public Product(String title, float price, int quantity) {
+        setId();
         this.title = title;
         this.price = price;
         this.quantity = quantity;

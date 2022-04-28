@@ -69,10 +69,9 @@ public class CRUDProductServiceImpl implements ICRUDProductService {
         for(Product prod: allProducts) {
             if(prod.getId() == id) {
                 allProducts.remove(prod);
-                return;
+                break;
             }
         }
         throw new Exception("Id nav atrasts!!!");
-    }
-    
+    }   
 }

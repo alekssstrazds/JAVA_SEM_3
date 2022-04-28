@@ -2,9 +2,12 @@ package lv.venta.demo.controllers;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -59,10 +62,15 @@ public class ProductCRUDController {
         return "add-product-page";
     }
     @PostMapping("/add") //localhost:8080/product/add
-    public String postProductAdd(Product temp) {    //aizpildīts produkts tiek saņemts
-        Product prod = prodService.createProduct(temp);
-        //return "redirect:/product/all";
-        return "redirect:/product/all/" + prod.getId();
+    public String postProductAdd(@Valid Product product, BindingResult result) {    //aizpildīts produkts tiek saņemts un bindingresult liek pēc validācijas
+        //ja dati ir ievadīti pēc visiem validācijas nosacijumiem
+        if(!result.hasErrors()) {
+            Product prod = prodService.createProduct(product);
+            //return "redirect:/product/all";
+            return "redirect:/product/all/" + prod.getId();
+        } else {
+            return "add-product-page";
+        }
     }
     @GetMapping("/update/{id}") //localhost:8080/product/update/1
     public String getProductUpdate(@PathVariable(name="id") int id, Model model) {
@@ -76,12 +84,16 @@ public class ProductCRUDController {
         }
     }
     @PostMapping("update/{id}")
-    public String getProductUpdaet(@PathVariable(name="id") int id, Product product) { //rediģētais produkts 
-        try {
-            prodService.updateById(id, product);
-            return "redirect:/product/all/" + id;
-        } catch (Exception e) {
-            return "redirect:/product/all";
+    public String getProductUpdaet(@PathVariable(name="id") int id, @Valid Product product, BindingResult result) { //rediģētais produkts 
+        if(!result.hasErrors()) {
+            try {
+                prodService.updateById(id, product);
+                return "redirect:/product/all/" + id;
+            } catch (Exception e) {
+                return "redirect:/product/all";
+            }
+        } else {
+            return "update-product-page";
         }
     }
     //delete kontrolieris - pēc id

@@ -1,8 +1,19 @@
 package lv.venta.demo.model;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 public class Product {
+    @Size(min = 3, max = 30, message = "Burtu skaits nedrīkst būt mazāks par 3 un lielāks par 30.")
+    @Pattern(regexp = "[A-Z]{1}[a-z]+", message = "Pirmam burtam jābūt lielam un citiem maziem.")
     private String title;
+    @Min(0)
+    @Max(10000)
     private float price;
+    @Min(0)
+    @Max(10000)
     private int quantity;
     private int id;
 

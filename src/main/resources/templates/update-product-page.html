@@ -2,9 +2,25 @@
     <body>
         <p>Ludzu ievadiet jaunu produktu:</p>
         <form action="#" th:action="@{/product/update/__${id}__}" th:object="${product}" method="post">
-            <input type="text" th:field="*{title}">
-            <input type="text" th:field="*{price}">
-            <input type="text" th:field="*{quantity}">
+        <table>
+            <tr>
+                <td> Ievadīt nosaukumu:</td>
+                <td> <input type="text" th:field="*{title}"></td>
+                <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</td>
+            </tr>
+
+            <tr>
+                <td> Ievadīt cenu:</td>
+                <td> <input type="text" th:field="*{price}"></td>
+                <td th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Name Error</td>
+            </tr>
+
+            <tr>
+                <td> Ievadīt daudzumu:</td>
+                <td> <input type="text" th:field="*{quantity}"></td>
+                <td th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}">Name Error</td>
+            </tr>
+        </table>
             <button type="submit">Rediģēt produktu</button>
         </form>
     </body>

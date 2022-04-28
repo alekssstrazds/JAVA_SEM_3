@@ -64,7 +64,7 @@ public class ProductCRUDController {
         //return "redirect:/product/all";
         return "redirect:/product/all/" + prod.getId();
     }
-    @GetMapping("/update/{id}")
+    @GetMapping("/update/{id}") //localhost:8080/product/update/1
     public String getProductUpdate(@PathVariable(name="id") int id, Model model) {
         try {
             Product prod = prodService.readById(id);
@@ -82,6 +82,18 @@ public class ProductCRUDController {
             return "redirect:/product/all/" + id;
         } catch (Exception e) {
             return "redirect:/product/all";
+        }
+    }
+    //delete kontrolieris - pēc id
+    @GetMapping("/delete/{id}") //localhost:8080/product/delete/1
+    public String getProductDelete(@PathVariable(name="id") int id, Model model) {
+        try {
+            prodService.deleteById(id);
+            model.addAttribute("package", prodService.readAllProduct());
+            return "all-product-page";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error-page"; //parādam error-page.html
         }
     }
 }

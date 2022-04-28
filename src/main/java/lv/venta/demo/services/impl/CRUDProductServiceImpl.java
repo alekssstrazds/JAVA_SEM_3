@@ -3,20 +3,19 @@ package lv.venta.demo.services.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lv.venta.demo.model.Product;
+import lv.venta.demo.repos.IProductRepo;
 import lv.venta.demo.services.ICRUDProductService;
 
 @Service
 public class CRUDProductServiceImpl implements ICRUDProductService {
 
-    private ArrayList<Product> allProducts = new ArrayList<>(
-        Arrays.asList(
-            new Product("Maize", 2.13f, 3),
-            new Product("Udens", 0.56f, 100),
-            new Product("Banans", 0.35f, 21)));
-
+    @Autowired
+    private IProductRepo prodRepo;
+        
     @Override
     public Product createProduct(Product temp) {
         for(Product prod: allProducts) {
@@ -33,17 +32,14 @@ public class CRUDProductServiceImpl implements ICRUDProductService {
 
     @Override
     public ArrayList<Product> readAllProduct() {
-        return allProducts;
+        return (ArrayList<Product>) prodRepo.findAll();
     }
 
     @Override
     public Product readById(int id) throws Exception {
-        for(Product prod: allProducts) {
-            if(prod.getId() == id) {
-                return prod;
-            }
-        }
-        throw new Exception("Id nav atrasts!!!");
+        if(prodRepo.existsById(id)) {
+            return prodRepo.findById(id).get();
+        } throw new Exception("Id nav atrasts!!!"); 
     }
 
     @Override
@@ -66,12 +62,13 @@ public class CRUDProductServiceImpl implements ICRUDProductService {
 
     @Override
     public void deleteById(int id) throws Exception {
-        for(Product prod: allProducts) {
-            if(prod.getId() == id) {
-                allProducts.remove(prod);
-                break;
-            }
+        boolean isFound = false;
+        if(prodRepo.existsById(id)) {
+            prodRepo.deleteById(id);
+            isFound = true;
+        } 
+        if(!isFound) {
+            throw new Exception("Id nav atrasts!!!");
         }
-        throw new Exception("Id nav atrasts!!!");
     }   
 }

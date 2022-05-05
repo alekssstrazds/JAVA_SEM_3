@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lv.venta.demo.model.Product;
+import lv.venta.demo.repos.IProductRepo;
 import lv.venta.demo.services.ICRUDProductService;
 import lv.venta.demo.services.IFilterProductService;
 
@@ -13,27 +14,17 @@ import lv.venta.demo.services.IFilterProductService;
 public class FilterProductServiceImpl implements IFilterProductService {
 
     @Autowired
-    private ICRUDProductService prodCRUDService;
+    private IProductRepo prodRepo;
 
     @Override
     public ArrayList<Product> filterProdcutsByPriceLargerThan(float priceThreshold) {
-        ArrayList<Product> filtredProducts = new ArrayList<Product>();
-        for(Product prod: prodCRUDService.readAllProduct()) {
-            if(prod.getPrice() > priceThreshold) {
-                filtredProducts.add(prod);
-            }
-        }
+        ArrayList<Product> filtredProducts = prodRepo.findByPriceGreaterThan(priceThreshold);
         return filtredProducts;
     }
 
     @Override
     public ArrayList<Product> filterProductsByQuantityLessThan(int quantityThreshold) {
-        ArrayList<Product> filtredProducts = new ArrayList<Product>();
-        for(Product prod: prodCRUDService.readAllProduct()) {
-            if(prod.getQuantity() < quantityThreshold) {
-                filtredProducts.add(prod);
-            }
-        }
+        ArrayList<Product> filtredProducts = prodRepo.findByQuantityLessThan(quantityThreshold);
         return filtredProducts;
     }
 

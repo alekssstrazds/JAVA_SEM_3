@@ -28,7 +28,7 @@ public class Product {
     private int quantity;
     @Column(name="Id")
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     public String getTitle() {
